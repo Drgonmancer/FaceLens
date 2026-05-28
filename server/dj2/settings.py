@@ -187,6 +187,8 @@ if os.path.isdir(MEDIA_ROOT) == False:
     os.mkdir(MEDIA_ROOT)
 
 ALIPAY_APP_ID = ''
-APP_PRIVATE_KEY_STRING = open('{}/util/alipay_key/app_private_2048.txt'.format(BASE_DIR)).read()
-ALIPAY_PUBLIC_KEY_STRING = open('{}/util/alipay_key/alipay_public_2048.txt'.format(BASE_DIR)).read()
 ALIPAY_SIGN_TYPE = 'RSA2'
+_app_key = os.path.join(BASE_DIR, 'util', 'alipay_key', 'app_private_2048.txt')
+_pub_key = os.path.join(BASE_DIR, 'util', 'alipay_key', 'alipay_public_2048.txt')
+APP_PRIVATE_KEY_STRING = open(_app_key).read() if os.path.isfile(_app_key) else ''
+ALIPAY_PUBLIC_KEY_STRING = open(_pub_key).read() if os.path.isfile(_pub_key) else ''
