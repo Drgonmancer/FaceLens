@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Django
+db.sqlite3
+server/db.sqlite3
+*.log
+logs/
+server/__pycache__/
+**/__pycache__/
+
+# 临时调试脚本
+server/test_*.js
+server/check_*.js
+server/_temp_*.js
+
+# 敏感配置
+server/config.ini
+.env
+.env.*
+
+# 人脸与登录抓拍（隐私）
+server/templates/file/face_train/*
+!server/templates/file/face_train/.gitkeep
+server/templates/file/login_faces/*
+!server/templates/file/login_faces/.gitkeep
+
+# 前端
+client/node_modules/
+client/dist/
+client/.env.local
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+.cache/
+
+# 数据库备份
+*.sql.bak
