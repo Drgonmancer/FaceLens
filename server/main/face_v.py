@@ -482,9 +482,13 @@ def batch_delete_accounts(request):
 def dashboard_data(request):
     if request.method in ["POST", "GET"]:
         msg = {"code": normal_code, "msg": "操作成功", "data": {}}
-        from util.opencv_face import OpenCVFace
-        ocv = OpenCVFace()
-        stats = ocv.get_stats()
+        try:
+            from util.opencv_face import OpenCVFace
+            ocv = OpenCVFace()
+            stats = ocv.get_stats()
+        except Exception as e:
+            print(f'[Dashboard] OpenCV初始化失败: {e}')
+            stats = {'threshold': 70}
         today = datetime.now().strftime('%Y-%m-%d')
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
         total_logins = loginrecord.objects.count()

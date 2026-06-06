@@ -112,8 +112,9 @@ def yonghu_login(request):
 def yonghu_faceLogin(request):
     if request.method in ["POST", "GET"]:
         msg = {'code': normal_code, "msg": mes.normal_code}
-        req_dict = request.session.get("req_dict")
+        req_dict = request.session.get("req_dict") or {}
         face = req_dict.get('face', '')
+        threshold = 70
         ip_addr = request.META.get('HTTP_X_FORWARDED_FOR', '').split(',')[0].strip() if request.META.get('HTTP_X_FORWARDED_FOR') else request.META.get('REMOTE_ADDR', '')
         ua = request.META.get('HTTP_USER_AGENT', '')[:200]
         from main.face_v import _save_login_record, _save_face_image
@@ -249,6 +250,9 @@ def yonghu_faceLogin(request):
             print(f'[FaceLogin] 人脸识别初始化失败: {e}')
             import traceback
             traceback.print_exc()
+            msg['code'] = 500
+            msg['msg'] = f'人脸识别服务异常: {e}'
+            return JsonResponse(msg)
 
         try:
             __sfsh__= yonghu.__sfsh__
@@ -261,7 +265,7 @@ def yonghu_faceLogin(request):
                 msg['msg'] = "账号已锁定，请联系管理员审核!"
                 return JsonResponse(msg)
 
-        if str(cur_user) == '{}':
+        if not cur_user:
             _save_login_record(
                 username='未知访客（陌生人）',
                 role='游客',

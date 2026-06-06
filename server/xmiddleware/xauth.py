@@ -57,6 +57,8 @@ class Xauth(MiddlewareMixin):
                 "/admin",
                 "/manage",
                 "/client",
+                "/assets",
+                "/dashboard",
                 "/xadmin",
                 "/file/download",
                  "/{}/remind/".format(schemaName),

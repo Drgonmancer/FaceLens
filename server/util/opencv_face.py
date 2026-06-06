@@ -15,6 +15,10 @@ class OpenCVFace(object):
     def __init__(self):
         self.cascade_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
         self.face_cascade = cv2.CascadeClassifier(self.cascade_path)
+        if not hasattr(cv2, 'face'):
+            raise RuntimeError(
+                '缺少 OpenCV 人脸识别模块，请安装: pip install opencv-contrib-python'
+            )
         self.recognizer = cv2.face.LBPHFaceRecognizer_create(radius=1, neighbors=8, grid_x=8, grid_y=8)
         self.train_data_dir = os.path.join(os.getcwd(), "templates", "file", "face_train")
         if not os.path.exists(self.train_data_dir):
